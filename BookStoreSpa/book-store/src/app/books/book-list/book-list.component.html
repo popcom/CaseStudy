@@ -1,0 +1,34 @@
+@if (isFetching() && !error()) {
+    <p class="fallback-text">Fetching available places...</p>
+  }
+
+  @if (error()) {
+    <p class="fallback-text">{{ error() }}</p>
+  }
+
+  @if (books()) {
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Year</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (book of books(); track book.id) {
+          <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.publishedDate | date}}</td>
+            <!-- <td><a [routerLink]="['/edit', book.id]">Edit</a></td> -->
+            <td><a routerLink="create">Edit</a></td>
+            <!-- <td><a (click)="onEditBook(book.id)">Edit</a></td> -->
+          </tr>        
+        }          
+      </tbody>
+    </table>
+  } @else if (books()?.length === 0) {
+    <p class="fallback-text">Unfortunately, no books could be found.</p>
+  }

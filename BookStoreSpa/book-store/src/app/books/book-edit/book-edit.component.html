@@ -1,0 +1,11 @@
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+    <label>
+      Title:
+      <input formControlName="title" />
+    </label>
+    <label>
+      Author:
+      <input formControlName="author" />
+    </label>
+    <button type="submit">{{ isEditMode() ? 'Save Changes' : 'Create Book' }}</button>
+  </form>
