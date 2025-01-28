@@ -1,10 +1,8 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Book } from '../book.model';
 import { BooksService } from '../books.service';
-import { BookCardComponent } from '../book-card/book-card.component';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
-import { BookEditComponent } from '../book-edit/book-edit.component';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-book-list',
@@ -23,7 +21,10 @@ export class BookListComponent implements OnInit {
 
   ngOnInit() {
     this.isFetching.set(true);
+    this.loadData();
+  }
 
+  loadData(){
     const subscription = this.booksService.getAllBooks().subscribe({
       next: (res) => {
         this.books.set(res);
@@ -41,10 +42,27 @@ export class BookListComponent implements OnInit {
     });
   }
 
-  onEditBook(id: string){
-    //this.router.navigate(['edit/', id]);
-    this.router.navigate(['edit/', id], {
-      replaceUrl: true,
+  onCreateBook(){
+    this.router.navigate(['create/']);
+  }
+
+  onDeleteBook(id: string){
+    const subscription = this.booksService.deleteRemoveBook(id).subscribe({
+      next: (res) => {
+        console.log('The Book Removed:', id);
+        this.loadData();
+      },
+      error: (error: Error) => {
+        this.error.set(error.message);
+      },
+      complete: () => {
+        this.isFetching.set(false);
+      },
     });
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
+
   }
 }

@@ -1,19 +1,22 @@
+<button class="btn" (click)="onCreateBook()">Add Book<i class="fa-icon fas fa-add"></i></button>  
+
 @if (isFetching() && !error()) {
-    <p class="fallback-text">Fetching available places...</p>
-  }
+    <p class="fallback-text">Fetching available books...</p>
+}
 
-  @if (error()) {
+@else if (error()) {
     <p class="fallback-text">{{ error() }}</p>
-  }
+}
 
-  @if (books()) {
+@else if (books() && books()!.length > 0) {
     <table>
       <thead>
         <tr>
           <th>Title</th>
           <th>Author</th>
-          <th>Year</th>
-          <th>Edit</th>
+          <th>Publish Date</th>
+          <th>ISBN</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -22,13 +25,16 @@
             <td>{{ book.title }}</td>
             <td>{{ book.author }}</td>
             <td>{{ book.publishedDate | date}}</td>
-            <!-- <td><a [routerLink]="['/edit', book.id]">Edit</a></td> -->
-            <td><a routerLink="create">Edit</a></td>
-            <!-- <td><a (click)="onEditBook(book.id)">Edit</a></td> -->
+            <td>{{ book.isbn }}</td>
+            <td>
+              <a class="fa-icon" [routerLink]="['/edit', book.id]"><i class="fas fa-edit"></i></a>
+              <a class="fa-icon" (click)="onDeleteBook(book.id!)"><i class="fas fa-trash"></i></a>
+            </td>
           </tr>        
         }          
       </tbody>
     </table>
-  } @else if (books()?.length === 0) {
+  } 
+  @else {
     <p class="fallback-text">Unfortunately, no books could be found.</p>
-  }
+}

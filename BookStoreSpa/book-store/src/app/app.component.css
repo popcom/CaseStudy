@@ -1,0 +1,15 @@
+main{
+    padding: 20px;
+    width: auto;
+}
+
+.banner{
+    width: 100%;
+    min-height: 50px;
+    background-color: darkslateblue;
+    text-align: center;
+    vertical-align: middle;
+    font-size: xx-large;
+    padding-top: 10px;
+    color: aliceblue;
+}

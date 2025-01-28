@@ -1,12 +1,6 @@
 ﻿using BookStore.Core.DTOs;
-using BookStore.Domain.Entities;
 using BookStore.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore.DataAccess.HandlerRequests
 {
@@ -18,11 +12,10 @@ namespace BookStore.DataAccess.HandlerRequests
         public async Task<Guid> Handle(CreateBookRequest request, CancellationToken cancellationToken)
         {
             var res = await _bookRepository.AddBookAsync(request.bookDto).ConfigureAwait(false);
-            //await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
             _unitOfWork.SaveChanges();
             return res;
         }
     }
 
-    public record CreateBookRequest(BookDto bookDto) : IRequest<Guid>;
+    public record CreateBookRequest(CreateBookDto bookDto) : IRequest<Guid>;
 }

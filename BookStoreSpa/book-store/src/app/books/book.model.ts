@@ -1,9 +1,5 @@
-export interface Book {
-    id: string;
-    title: string;
-    imgUrl: string;
-    author: string;
-    description: string;
-    isin: string;
-    publishedDate: string;
-  }
+import { CreateBook } from "./create-book.model";
+
+export interface Book extends CreateBook {
+    id: string | null;
+}

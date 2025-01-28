@@ -2,11 +2,6 @@
 using BookStore.Domain.Entities;
 using BookStore.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore.DataAccess.Repositories
 {
@@ -14,31 +9,32 @@ namespace BookStore.DataAccess.Repositories
     {
         private readonly BookDbContext _bookDbContext = bookDbContext;
 
-        public async Task<Guid> AddBookAsync(BookDto book)
+        public async Task<Guid> AddBookAsync(CreateBookDto bookDto)
         {
+            await Task.Yield();
             Book newBook = new()
             {
-                Title = book.Title,
-                Author = book.Author,
-                Description = book.Description,
-                ImgUrl = book.ImgUrl,
-                ISBN = book.ISBN,
-                PublishedDate = book.PublishedDate,
+                Title = bookDto.Title,
+                Author = bookDto.Author,
+                Description = bookDto.Description,
+                ImgUrl = bookDto.ImgUrl,
+                ISBN = bookDto.ISBN,
+                PublishedDate = bookDto.PublishedDate,
             };
             var result = _bookDbContext.Books!.Add(newBook);
             //_bookDbContext.SaveChanges();
             return result.Entity.Id;
         }
 
-        public Task DeleteBookAsync(Guid id)
+        public async Task DeleteBookAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var book = await _bookDbContext.Books!.FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
+            _bookDbContext.Books!.Remove(book!);
         }
 
-        public async Task<IQueryable<Book>> GetAllBooksAsync()
+        public IQueryable<Book> GetAllBooksQuery()
         {
-            await Task.Yield();
-            return _bookDbContext.Books!;
+            return _bookDbContext.Books!.AsQueryable();
         }
 
         public async Task<Book?> GetBookByIdAsync(Guid id)
@@ -46,9 +42,15 @@ namespace BookStore.DataAccess.Repositories
             return await _bookDbContext.Books!.FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
         }
 
-        public Task UpdateBookAsync(Book book)
+        public async Task UpdateBookAsync(Guid id, CreateBookDto bookDto)
         {
-            throw new NotImplementedException();
+            var book = await _bookDbContext.Books!.FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
+            book!.Title = bookDto.Title;
+            book!.Author = bookDto.Author;
+            book!.Description = bookDto.Description;
+            book!.ISBN = bookDto.ISBN;
+            book!.ImgUrl = bookDto.ImgUrl;
+            book!.PublishedDate = bookDto.PublishedDate;
         }
     }
 }

@@ -6,5 +6,5 @@ export const routes: Routes = [
     { path: 'books', component: BookListComponent },
     { path: 'edit/:id', component: BookEditComponent },
     { path: 'create', component: BookEditComponent },
-    // { path: '', redirectTo: '/books', pathMatch: 'full' },
+    { path: '', redirectTo: '/books', pathMatch: 'full' },
   ];
