@@ -1,5 +1,6 @@
 ﻿using BookStore.DataAccess.HandlerRequests;
 using BookStore.Domain.Interfaces;
+using FluentAssertions;
 using Moq;
 
 namespace BookStore.Tests.Handlers;
@@ -30,6 +31,8 @@ public class DeleteBookHandlerTest
         var result = await _handler.Handle(request, CancellationToken.None);
 
         // Assert
+
+        result.Should().BeTrue();
 
         _repositoryMock.Verify(r => r.DeleteBookAsync(entityId), Times.Once);
         _unitOfWork.Verify(r => r.SaveChanges(), Times.Once);
