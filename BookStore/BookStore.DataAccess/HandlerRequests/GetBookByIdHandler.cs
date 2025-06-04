@@ -28,4 +28,4 @@ public class GetBookByIdHandler(IBookRepository bookRepository) : IRequestHandle
     }
 }
 
-public record GetBookByIdRequest(Guid Id) : IRequest<BookDto>;
+public record GetBookByIdRequest(Guid Id) : IRequest<BookDto?>;
