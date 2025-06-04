@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable, signal } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 
 import { Book } from "./book.model";
 import { catchError, map, throwError } from "rxjs";
@@ -10,9 +10,7 @@ import { CreateBook } from "./create-book.model";
   })
   export class BooksService {
     private httpClient = inject(HttpClient);
-    private books = signal<Book[]>([]);
 
-  loadedBooks = this.books.asReadonly();
 
   getAllBooks() {
     return this.httpClient.get<Book[]>('https://localhost:7162/api/books').pipe(
