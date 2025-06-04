@@ -32,7 +32,7 @@ Entity Framework: BookDbContext defines a DbSet<Book>. Migration files exist und
 
 Unit tests: Backend tests use Moq, xUnit, and FluentAssertions (see BookStore.Tests.csproj). Angular tests use Jasmine/Karma.
 
-Angular application: The SPA is bootstrapped via main.ts and uses standalone Angular components. HTTP endpoints assume the Web API runs on https://localhost:7162/.
+Angular application: The SPA is bootstrapped via main.ts and uses standalone Angular components. API requests use the base URL defined in `src/environments/environment.ts`, which by default points to `https://localhost:7162/api`.
 
 Getting started / next steps
 
