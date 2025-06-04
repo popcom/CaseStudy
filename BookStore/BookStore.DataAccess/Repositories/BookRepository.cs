@@ -2,6 +2,7 @@
 using BookStore.Domain.Entities;
 using BookStore.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace BookStore.DataAccess.Repositories
 {
@@ -29,7 +30,11 @@ namespace BookStore.DataAccess.Repositories
         public async Task DeleteBookAsync(Guid id)
         {
             var book = await _bookDbContext.Books!.FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
-            _bookDbContext.Books!.Remove(book!);
+            if (book is null)
+            {
+                throw new KeyNotFoundException($"Book with id {id} not found.");
+            }
+            _bookDbContext.Books!.Remove(book);
         }
 
         public IQueryable<Book> GetAllBooksQuery()
@@ -45,12 +50,16 @@ namespace BookStore.DataAccess.Repositories
         public async Task UpdateBookAsync(Guid id, CreateBookDto bookDto)
         {
             var book = await _bookDbContext.Books!.FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
-            book!.Title = bookDto.Title;
-            book!.Author = bookDto.Author;
-            book!.Description = bookDto.Description;
-            book!.ISBN = bookDto.ISBN;
-            book!.ImgUrl = bookDto.ImgUrl;
-            book!.PublishedDate = bookDto.PublishedDate;
+            if (book is null)
+            {
+                throw new KeyNotFoundException($"Book with id {id} not found.");
+            }
+            book.Title = bookDto.Title;
+            book.Author = bookDto.Author;
+            book.Description = bookDto.Description;
+            book.ISBN = bookDto.ISBN;
+            book.ImgUrl = bookDto.ImgUrl;
+            book.PublishedDate = bookDto.PublishedDate;
         }
     }
 }
