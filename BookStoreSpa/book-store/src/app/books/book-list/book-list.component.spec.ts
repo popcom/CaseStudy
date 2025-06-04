@@ -19,7 +19,7 @@ describe('BookListComponent', () => {
 
   beforeEach(async () => {
     // Create a mock service
-    mockService = jasmine.createSpyObj<BooksService>('BooksService', ['getAllBooks']);
+    mockService = jasmine.createSpyObj<BooksService>('BooksService', ['getAllBooks', 'deleteRemoveBook', 'getBookById']);
     book = { id : 'id', title : "title", author : "author", imgUrl: "imgUrl", description: "description", isbn : "isbn", publishedDate: ""};
     mockService.getAllBooks.and.returnValue(of([book]));
     mockService.deleteRemoveBook.and.returnValue(of(true));
@@ -63,6 +63,6 @@ describe('BookListComponent', () => {
 
     // Now check if the signal was updated
     const component = fixture.componentInstance;
-    expect(component.books()).toBe([book]);
+    expect(component.books()).toEqual([book]);
   }));
 });
