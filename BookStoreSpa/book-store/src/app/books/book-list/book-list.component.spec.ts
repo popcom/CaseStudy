@@ -29,7 +29,7 @@ describe('BookListComponent', () => {
     mockRouter = jasmine.createSpyObj<Router>('Router', ['navigate']);
 
     // Create a mock ActivatedRoute
-    mockActivateRoute = jasmine.createSpyObj<ActivatedRoute>('ActivateRoute', ['navigate']);
+    mockActivateRoute = jasmine.createSpyObj<ActivatedRoute>('ActivatedRoute', ['navigate']);
 
     // Create a mock DestroyRef
     mockDestroyRef = jasmine.createSpyObj<DestroyRef>('DestroyRef', ['onDestroy']);
