@@ -19,7 +19,7 @@ public class GetBookByIdHandlerTest
     }
 
     [Fact]
-    public async Task Handle_CreateBook()
+    public async Task Handle_GetBookById()
     {
         // Arrange
         var entityId = Guid.NewGuid();

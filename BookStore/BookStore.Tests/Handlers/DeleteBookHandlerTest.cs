@@ -18,7 +18,7 @@ public class DeleteBookHandlerTest
     }
 
     [Fact]
-    public async Task Handle_CreateBook()
+    public async Task Handle_DeleteBook()
     {
         // Arrange
         var entityId = Guid.NewGuid();
