@@ -1,32 +1,32 @@
 <div class="form-container">
-  <h2 class="form-title">{{this.isEditMode() ? "Edit book" : "Add a new book"}}</h2>
+  <h2 class="form-title">{{isEditMode ? "Edit book" : "Add a new book"}}</h2>
   <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="name">Title</label>
-      <input type="text" formControlName="title" [value]="currentBook()?.title" />
+      <input type="text" formControlName="title" [value]="currentBook?.title" />
     </div>
     <div class="form-group">
       <label for="author">Author</label>
-      <input formControlName="author" [value]="currentBook()?.author" />
+      <input formControlName="author" [value]="currentBook?.author" />
     </div>
     <div class="form-group">
       <label for="publishedDate">Publish Date</label>
-      <input type="date" formControlName="publishedDate" [value]="currentBook()?.publishedDate" />
+      <input type="date" formControlName="publishedDate" [value]="currentBook?.publishedDate" />
     </div>
     <div class="form-group">
       <label for="isbn">ISBN</label>
-      <input formControlName="isbn" [value]="currentBook()?.isbn" />
+      <input formControlName="isbn" [value]="currentBook?.isbn" />
     </div>
     <div class="form-group">
       <label for="imgUrl">Image</label>
-      <input formControlName="imgUrl" [value]="currentBook()?.imgUrl" />
+      <input formControlName="imgUrl" [value]="currentBook?.imgUrl" />
     </div>
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea type="text" formControlName="description" [value]="currentBook()?.description"></textarea>
+      <textarea type="text" formControlName="description" [value]="currentBook?.description"></textarea>
     </div>
     <div class="form-group buttons">
-      <button type="submit" class="form-button">{{ isEditMode() ? 'Save Changes' : 'Add Book' }}</button>
+      <button type="submit" class="form-button">{{ isEditMode ? 'Save Changes' : 'Add Book' }}</button>
       <button (click)="onCancel()" class="form-button">Cancel</button>
     </div>
   </form>

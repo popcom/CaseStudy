@@ -1,40 +1,38 @@
 <button class="btn" (click)="onCreateBook()">Add Book<i class="fa-icon fas fa-plus"></i></button>
 
-@if (isFetching() && !error()) {
-    <p class="fallback-text">Fetching available books...</p>
-}
+<div *ngIf="(isFetching$ | async) && !(error$ | async)">
+  <p class="fallback-text">Fetching available books...</p>
+</div>
 
-@else if (error()) {
-    <p class="fallback-text">{{ error() }}</p>
-}
+<div *ngIf="error$ | async as error">
+  <p class="fallback-text">{{ error }}</p>
+</div>
 
-@else if (books() && books()!.length > 0) {
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Publish Date</th>
-          <th>ISBN</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (book of books(); track book.id) {
-          <tr>
-            <td>{{ book.title }}</td>
-            <td>{{ book.author }}</td>
-            <td>{{ book.publishedDate | date}}</td>
-            <td>{{ book.isbn }}</td>
-            <td>
-              <a class="fa-icon" [routerLink]="['/edit', book.id]"><i class="fas fa-edit"></i></a>
-              <a class="fa-icon" (click)="onDeleteBook(book.id!)"><i class="fas fa-trash"></i></a>
-            </td>
-          </tr>        
-        }          
-      </tbody>
-    </table>
-  } 
-  @else {
-    <p class="fallback-text">Unfortunately, no books could be found.</p>
-}
+<ng-container *ngIf="books$ | async as books; else noBooks">
+  <table *ngIf="books.length > 0">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publish Date</th>
+        <th>ISBN</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books; trackBy: trackBook">
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.publishedDate | date }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>
+          <a class="fa-icon" [routerLink]="['/edit', book.id]"><i class="fas fa-edit"></i></a>
+          <a class="fa-icon" (click)="onDeleteBook(book.id!)"><i class="fas fa-trash"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
+<ng-template #noBooks>
+  <p class="fallback-text">Unfortunately, no books could be found.</p>
+</ng-template>
