@@ -1,6 +1,7 @@
 ﻿using BookStore.Core.DTOs;
 using BookStore.DataAccess.HandlerRequests;
 using BookStore.Domain.Interfaces;
+using FluentAssertions;
 using Moq;
 
 namespace BookStore.Tests.Handlers;
@@ -32,6 +33,7 @@ public class UpdateBookHandlerTest
         var result = await _handler.Handle(request, CancellationToken.None);
 
         // Assert
+        result.Should().BeTrue();
         _repositoryMock.Verify(r => r.UpdateBookAsync(entityId, bookDto), Times.Once);
         _unitOfWork.Verify(r => r.SaveChanges(), Times.Once);
     }
