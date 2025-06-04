@@ -47,3 +47,7 @@ Examine unit tests in BookStore.Tests and Angular component tests for usage exam
 Learn Entity Framework migrations for database changes and how the Angular service interacts with the backend.
 
 This provides a baseline understanding of how the backend API and frontend SPA work together within the repository. The solution’s layered structure (Core, Domain, DataAccess, WebApi, Tests) along with the Angular client offers a good foundation for further exploration and development.
+
+License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
